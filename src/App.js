@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Player from './components/player'
 
 import Global from './styles/global'
@@ -43,27 +43,34 @@ const playlist = [
 ]
 
 function App() {
-  const [{name, author, image, source}] = playlist
+  const [music, setMusic] = useState(playlist[0])
+
   return (
     <div className="app">
       <Global />
       <Player
-        name={name}
-        author={author}
-        image={image}
-        source={source}
+        name={music.name}
+        author={music.author}
+        image={music.image}
+        source={music.source}
         onNext={onNext}
-        onPrev={onPrev} 
+        onPrev={onPrev}
       />
     </div>
   );
 
-  function onNext() {
-    
+  function onNext({ playing }) {
+    const nextMusic = playlist[playlist.indexOf(music) + 1]
+    if (nextMusic) {
+      setMusic(nextMusic)
+    }
   }
 
-  function onPrev() {
-
+  function onPrev({ playing }) {
+    const prevMusic = playlist[playlist.indexOf(music) - 1]
+    if (prevMusic) {
+      setMusic(prevMusic)
+    }
   }
 
 

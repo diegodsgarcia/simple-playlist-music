@@ -2,24 +2,23 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import * as S from './styled'
 
-let player
+const player = new Audio();
 
-export default function Player({name, author, image, source, onNext, onPrev}) {
+export default function Player({ name, author, image, source, onNext, onPrev }) {
 
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
 
   useEffect(() => {
-    player = new Audio()
     player.src = source
   }, [source])
 
   return (
     <S.Wrapper>
-      {image && 
-      <S.Figure>
-        <img src={image} alt={name} />
-      </S.Figure>
+      {image &&
+        <S.Figure>
+          <img src={image} alt={name} />
+        </S.Figure>
       }
 
       <div className="description">
@@ -28,25 +27,25 @@ export default function Player({name, author, image, source, onNext, onPrev}) {
       </div>
 
       <div className="actions">
-        <S.Button onClick={onPrev}>
-          <S.Prev  />
+        <S.Button onClick={onPrev.bind(this, { playing })}>
+          <S.Prev />
         </S.Button>
 
-   
-          {!playing && 
+
+        {!playing &&
           <S.MainButton onClick={onPlay}>
             <S.Play />
           </S.MainButton>
-          }
+        }
 
-          {playing &&
+        {playing &&
           <S.MainButton onClick={onPause}>
             <S.Pause />
           </S.MainButton>
-          }
-   
+        }
 
-        <S.Button onClick={onNext}>
+
+        <S.Button onClick={onNext.bind(this, { playing })}>
           <S.Next />
         </S.Button>
       </div>
