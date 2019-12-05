@@ -11,7 +11,11 @@ export default function Player({ name, author, image, source, onNext, onPrev }) 
 
   useEffect(() => {
     player.src = source
-  }, [source])
+
+    if (playing) {
+      player.play()
+    }
+  }, [source, playing])
 
   return (
     <S.Wrapper>
