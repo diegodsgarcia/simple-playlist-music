@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+
+import * as PlaylistActions from '../../store/playlist/actions'
 import * as S from './styled'
 
 const player = new Audio();
 
-export default function Player({ name, author, image, source, onNext, onPrev, hasPrev, hasNext }) {
-
-  const [playing, setPlaying] = useState(false)
+function Player({ name, author, image, source, onNext, onPrev, hasPrev, hasNext, playing, playMusic }) {
   const [muted, setMuted] = useState(false)
 
   useEffect(() => {
@@ -63,12 +65,12 @@ export default function Player({ name, author, image, source, onNext, onPrev, ha
   )
 
   function onPlay() {
-    setPlaying(true)
+    playMusic(true)
     player.play()
   }
 
   function onPause() {
-    setPlaying(false)
+    playMusic(false)
     player.pause()
   }
 
@@ -78,6 +80,14 @@ export default function Player({ name, author, image, source, onNext, onPrev, ha
   }
 }
 
+const mapStateToProps = ({playlist}) => ({
+  playing: playlist.playing,
+  hasPrev: playlist.hasPrev,
+  hasNext: playlist.hasNext,
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistActions, dispatch)
+
 Player.propTypes = {
   name: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
@@ -86,3 +96,5 @@ Player.propTypes = {
   onNext: PropTypes.func.isRequired,
   onPrev: PropTypes.func.isRequired,
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player)

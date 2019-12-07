@@ -1,52 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import Player from '../components/player'
 import List from '../components/list'
 
 import Global from '../styles/global'
 
-const playlist = [
-  {
-    name: 'Kirby 64',
-    author: 'Nintendo 64',
-    image: './images/kirby.jpg',
-    source: './music/kirby.ogg'
-  },
-  {
-    name: 'Castlevania Shyphonia of the Night',
-    author: 'PS1',
-    image: './images/castlevania.jpg',
-    source: './music/castlevania.ogg'
-  },
-  {
-    name: 'Mario 64',
-    author: 'Nintendo 64',
-    image: './images/mario-64.jpg',
-    source: './music/mario-64.ogg'
-  },
-  {
-    name: 'Mario Land',
-    author: 'Nintendo',
-    image: './images/mario-land.jpg',
-    source: './music/mario-land.ogg'
-  },
-  {
-    name: 'Pokemon',
-    author: 'Nintendo',
-    image: './images/pokemon.jpg',
-    source: './music/pokemon.ogg'
-  },
-  {
-    name: 'Zelda Ocarina of Time',
-    author: 'Nintendo 64',
-    image: './images/zelda.jpg',
-    source: './music/zelda.ogg'
-  },
-]
+import * as  PlaylistActions from  '../store/playlist/actions'
 
-function App() {
-  const [music, setMusic] = useState(playlist[0])
-  const [hasPrev, setHasPrev] = useState(false)
-  const [hasNext, setHasNext] = useState(true)
+function App({ playlist, music, setMusic, hasNext, hasPrev, setPrev, setNext }) {
 
   return (
     <div className="app">
@@ -59,16 +21,14 @@ function App() {
         source={music.source}
         onNext={onNext}
         onPrev={onPrev}
-        hasPrev={hasPrev}
-        hasNext={hasNext}
       />
     </div>
   );
 
   function onNext() {
     const nextMusic = playlist[playlist.indexOf(music) + 1]
-    setHasPrev(true)
-    setHasNext(!!nextMusic)
+    setPrev(true)
+    setNext(!!nextMusic)
     
     if (nextMusic) {
       setMusic(nextMusic)
@@ -77,8 +37,8 @@ function App() {
 
   function onPrev() {
     const prevMusic = playlist[playlist.indexOf(music) - 1]
-    setHasNext(true)
-    setHasPrev(!!prevMusic)
+    setNext(true)
+    setPrev(!!prevMusic)
 
     if (prevMusic) {
       setMusic(prevMusic)
@@ -88,8 +48,14 @@ function App() {
   function onMusicSelected(music) {
     setMusic(music);
   }
-
-
 }
 
-export default App;
+const mapStateToProps = ({playlist}) => ({
+  music: playlist.musicSelected,
+  playlist: playlist.playlist,
+  playing: playlist.played,
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistActions, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
