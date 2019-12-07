@@ -10,9 +10,10 @@ const Wrapper = styled.div`
   position: fixed;
   display: flex;
   width: 100%;
-  height: 90px;
+  height: var(--playerHeight);
   bottom: 0;
   box-shadow: 0 0 8px rgba(0,0,0,.4);
+  background-color: #fff;
 
   .actions, .config {
     display: flex;
@@ -44,8 +45,8 @@ const Wrapper = styled.div`
 `
 
 const Figure = styled.figure`
-  width: 90px;
-  height: 90px;
+  width: var(--playerHeight);
+  height: var(--playerHeight);
   background-color: #d3d3d3;
 
   img {

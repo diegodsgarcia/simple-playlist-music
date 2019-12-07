@@ -19,6 +19,8 @@ const Global = createGlobalStyle`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
+    --playerHeight: 90px;
   }
 
 
@@ -26,7 +28,7 @@ const Global = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    min-height: calc(100% - var(--playerHeight));
     background-color: #f5f5f5;
   }
 `

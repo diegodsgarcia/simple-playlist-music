@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Player from '../components/player'
+import List from '../components/list'
 
 import Global from '../styles/global'
 
@@ -50,6 +51,7 @@ function App() {
   return (
     <div className="app">
       <Global />
+      <List musics={playlist} onItemClick={onMusicSelected} />
       <Player
         name={music.name}
         author={music.author}
@@ -63,7 +65,7 @@ function App() {
     </div>
   );
 
-  function onNext({ playing }) {
+  function onNext() {
     const nextMusic = playlist[playlist.indexOf(music) + 1]
     setHasPrev(true)
     setHasNext(!!nextMusic)
@@ -73,7 +75,7 @@ function App() {
     }
   }
 
-  function onPrev({ playing }) {
+  function onPrev() {
     const prevMusic = playlist[playlist.indexOf(music) - 1]
     setHasNext(true)
     setHasPrev(!!prevMusic)
@@ -81,6 +83,10 @@ function App() {
     if (prevMusic) {
       setMusic(prevMusic)
     }
+  }
+
+  function onMusicSelected(music) {
+    setMusic(music);
   }
 
 
