@@ -4,7 +4,7 @@ import * as S from './styled'
 
 const player = new Audio();
 
-export default function Player({ name, author, image, source, onNext, onPrev }) {
+export default function Player({ name, author, image, source, onNext, onPrev, hasPrev, hasNext }) {
 
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
@@ -31,7 +31,7 @@ export default function Player({ name, author, image, source, onNext, onPrev }) 
       </div>
 
       <div className="actions">
-        <S.Button onClick={onPrev.bind(this, { playing })}>
+        <S.Button disabled={!hasPrev} onClick={onPrev.bind(this, { playing })}>
           <S.Prev />
         </S.Button>
 
@@ -48,8 +48,7 @@ export default function Player({ name, author, image, source, onNext, onPrev }) 
           </S.MainButton>
         }
 
-
-        <S.Button onClick={onNext.bind(this, { playing })}>
+        <S.Button disabled={!hasNext} onClick={onNext.bind(this, { playing })}>
           <S.Next />
         </S.Button>
       </div>

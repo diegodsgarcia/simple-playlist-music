@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Player from './components/player'
+import Player from '../components/player'
 
-import Global from './styles/global'
+import Global from '../styles/global'
 
 const playlist = [
   {
@@ -44,6 +44,8 @@ const playlist = [
 
 function App() {
   const [music, setMusic] = useState(playlist[0])
+  const [hasPrev, setHasPrev] = useState(false)
+  const [hasNext, setHasNext] = useState(true)
 
   return (
     <div className="app">
@@ -55,12 +57,17 @@ function App() {
         source={music.source}
         onNext={onNext}
         onPrev={onPrev}
+        hasPrev={hasPrev}
+        hasNext={hasNext}
       />
     </div>
   );
 
   function onNext({ playing }) {
     const nextMusic = playlist[playlist.indexOf(music) + 1]
+    setHasPrev(true)
+    setHasNext(!!nextMusic)
+    
     if (nextMusic) {
       setMusic(nextMusic)
     }
@@ -68,6 +75,9 @@ function App() {
 
   function onPrev({ playing }) {
     const prevMusic = playlist[playlist.indexOf(music) - 1]
+    setHasNext(true)
+    setHasPrev(!!prevMusic)
+
     if (prevMusic) {
       setMusic(prevMusic)
     }

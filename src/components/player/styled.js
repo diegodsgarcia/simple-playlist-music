@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { SkipNext } from 'styled-icons/material/SkipNext'
 import { SkipPrevious } from 'styled-icons/material/SkipPrevious'
 import { PlayCircle } from 'styled-icons/fa-solid/PlayCircle'
@@ -62,6 +62,14 @@ const Button = styled.button`
   background-color: transparent;
   cursor: pointer;
   outline: none;
+
+  ${props => props.disabled && css`
+    pointer-events: none;
+
+    svg {
+      fill: #ccc;
+    }
+  `}
 `
 
 const MainButton = styled.button`
