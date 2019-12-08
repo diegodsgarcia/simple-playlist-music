@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import media from 'styled-media-query'
 
 const Wrapper = styled.ul`
   list-style: none;
@@ -6,10 +7,15 @@ const Wrapper = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
+
+  ${media.lessThan('medium')`
+    grid-template-columns: repeat(auto-fill, 100%);
+  `}
 `
 
 const Item = styled.li`
-  background-color: #fff;
+  background-color: ${props => props.selected ? '#000' : '#fff'};
+  color: ${props => props.selected && '#fff'};
 
   figure {
     height: 300px;

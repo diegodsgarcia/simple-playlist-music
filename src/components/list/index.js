@@ -1,11 +1,11 @@
 import React from 'react'
 import * as S from './styled'
 
-export default function List({ musics, onItemClick }) {
+export default function List({ musics, onItemClick, selected }) {
   return (
   <S.Wrapper>
     {musics.map(((music, i) => (
-      <S.Item key={i}>
+      <S.Item key={i} selected={selected === music}>
         <figure onClick={onItemClick.bind(this, music)}>
           <img src={music.image} alt={music.name} />
         </figure>

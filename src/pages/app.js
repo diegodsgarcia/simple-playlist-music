@@ -8,12 +8,12 @@ import Global from '../styles/global'
 
 import * as  PlaylistActions from  '../store/playlist/actions'
 
-function App({ playlist, music, setMusic, hasNext, hasPrev, setPrev, setNext }) {
+function App({ playlist, music, setMusic, setPrev, setNext, playMusic }) {
 
   return (
     <div className="app">
       <Global />
-      <List musics={playlist} onItemClick={onMusicSelected} />
+      <List musics={playlist} onItemClick={onMusicSelected} selected={music} />
       <Player
         name={music.name}
         author={music.author}
@@ -46,7 +46,13 @@ function App({ playlist, music, setMusic, hasNext, hasPrev, setPrev, setNext }) 
   }
 
   function onMusicSelected(music) {
-    setMusic(music);
+    const next = playlist[playlist.indexOf(music) + 1]
+    const prev = playlist[playlist.indexOf(music) - 1]
+
+    setNext(!!next)
+    setPrev(!!prev)
+    setMusic(music)
+    playMusic(true)
   }
 }
 
